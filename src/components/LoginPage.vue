@@ -37,6 +37,7 @@ export default {
 
       if (data && data.data) {
         localStorage.setItem('token', data.data);
+        location.reload(true);
         this.$router.push('/'); // Redirect to main page
       }
       else {

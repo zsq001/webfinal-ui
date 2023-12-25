@@ -55,8 +55,11 @@ export default {
         if (data && data.data) {
           // The user info was successfully updated
           // You can update the local user info here if needed
+          location.reload(true);
+
           alert('User info updated successfully!');
           this.changeUserName(username);
+
 
         } else {
           // The API returned an error

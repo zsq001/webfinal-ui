@@ -1,17 +1,20 @@
 <template>
-<!--  <div>-->
-<!--    <div v-for="(chat, index) in chatList" :key="index">-->
-<!--      <p>{{ chat.name }}</p>-->
-<!--      <p>{{ chat.latest_msg }}</p>-->
-<!--      <p>{{ chat.latest_msg_time }}</p>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--  <div>-->
+  <!--    <div v-for="(chat, index) in chatList" :key="index">-->
+  <!--      <p>{{ chat.name }}</p>-->
+  <!--      <p>{{ chat.latest_msg }}</p>-->
+  <!--      <p>{{ chat.latest_msg_time }}</p>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
-  <mdui-list>
-    <mdui-list-item>
-      <mdui-text-field v-model="tuserid" label="Enter User Id"></mdui-text-field> <mdui-button slot="end-icon" @click="goToChat(tuserid)">Chat</mdui-button>
-    </mdui-list-item>
-    <mdui-list-item v-for="(chat, index) in chatList" :key="index" :description="chat.latest_msg" :headline="chat.name">
+
+  <mdui-list-item>
+    <mdui-text-field v-model="tuserid" label="Enter User Id"></mdui-text-field>
+    <mdui-button slot="end-icon" @click="goToChat(tuserid)">Chat</mdui-button>
+  </mdui-list-item>
+  <mdui-list class="chat-list">
+    <mdui-list-item v-for="(chat, index) in chatList" :key="index" :description="chat.latest_msg"
+                    :headline="chat.name">
       <mdui-button variant="elevated" slot="end-icon" @click="goToChat(chat.ID)">Chat
       </mdui-button>
     </mdui-list-item>
@@ -31,7 +34,7 @@ export default {
       tuserid: ''
     };
   },
-  methods:{
+  methods: {
     async get_id() {
       try {
         const response = await fetch('http://localhost:8080/api/v1/user/whoami', {
@@ -56,12 +59,10 @@ export default {
         this.errorMessage = error.message;
       }
     },
-    async goToChat(id){
+    async goToChat(id) {
       if (parseInt(id) === parseInt(this.userId)) {
         alert("You can't chat with yourself!");
-        return;
-      }
-      else {
+      } else {
         try {
           const response = await fetch(`http://localhost:8080/api/v1/user/info/${id}`, {
             method: 'GET',
@@ -75,12 +76,12 @@ export default {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           this.$router.push(`/chat/${id}`);
-        }catch (error) {
+        } catch (error) {
           this.errorMessage = error.message;
         }
       }
     },
-    async fetchList(){
+    async fetchList() {
       try {
         const response = await fetch('http://localhost:8080/api/v1/msg/v1/list', {
           method: 'GET',
@@ -105,7 +106,7 @@ export default {
       }
     }
   },
-  created(){
+  created() {
     this.fetchList();
     this.userId = this.get_id();
   },
@@ -114,4 +115,8 @@ export default {
 
 <style scoped>
 /* Add your styles here */
+.chat-list {
+  max-height: 60%; /* Adjust this value as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
 </style>

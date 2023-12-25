@@ -5,16 +5,18 @@
       <mdui-text-field v-model="newMessage" clearable label="Enter Text"></mdui-text-field>
       <mdui-button slot="end-icon" @click="sendMessage">Send</mdui-button>
     </mdui-list-item>
-    <mdui-list-subheader>Messages With {{userName}}</mdui-list-subheader>
-    <mdui-list-item v-for="(message, index) in messages" :key="index">
-      <div v-if="message.SendUserID === this.$attrs.nowUserId">{{ this.$attrs.nowUser }}:</div>
-      <div v-else>{{ userName }}:</div>
-      <div>{{ message.Content }}</div>
-      <mdui-button v-if="isableRecall(message)" variant="elevated" slot="end-icon" @click="recall(message.ID)">Recall
-      </mdui-button>
-      <mdui-button variant="elevated" slot="end-icon" @click="deleteMessage(message.ID)">Delete
-      </mdui-button>
-    </mdui-list-item>
+    <mdui-list-subheader>Messages With {{ userName }}</mdui-list-subheader>
+    <div class="chat-content">
+      <mdui-list-item v-for="(message, index) in messages" :key="index">
+        <div v-if="message.SendUserID === this.$attrs.nowUserId">{{ this.$attrs.nowUser }}:</div>
+        <div v-else>{{ userName }}:</div>
+        <div>{{ message.Content }}</div>
+        <mdui-button v-if="isableRecall(message)" variant="elevated" slot="end-icon" @click="recall(message.ID)">Recall
+        </mdui-button>
+        <mdui-button variant="elevated" slot="end-icon" @click="deleteMessage(message.ID)">Delete
+        </mdui-button>
+      </mdui-list-item>
+    </div>
   </mdui-list>
 </template>
 
@@ -60,10 +62,11 @@ export default {
       }
     },
     isableRecall(message) {
-      return parseInt(Date.now() /1000) - message.SendTime < 300 && (message.ReceiveUserID === parseInt(this.$route.params.id));
+      return parseInt(Date.now() / 1000) - message.SendTime < 300 && (message.ReceiveUserID === parseInt(this.$route.params.id));
     },
     backtoChat() {
       this.$router.push('/chat');
+      clearInterval(this.intervalID);
     },
     async fetchMessages() {
       try {
@@ -144,13 +147,11 @@ export default {
         this.errorMessage = error.message;
       }
     },
-    async GetUserName(userId){
+    async GetUserName(userId) {
       try {
         const response = await fetch(`http://localhost:8080/api/v1/user/info/${userId}`, {
           method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
+
         });
 
         if (!response.ok) {
@@ -179,4 +180,8 @@ export default {
 
 <style scoped>
 /* Add your styles here */
+.chat-content {
+  max-height: 60%; /* Adjust this value as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
 </style>

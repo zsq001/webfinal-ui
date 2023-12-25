@@ -1,6 +1,6 @@
 import './assets/main.css'
 
-import  { createApp } from 'vue'
+import {createApp} from 'vue'
 import LoginPage from "@/components/LoginPage.vue";
 import RegisterPage from "@/components/RegisterPage.vue";
 import MainPage from "@/components/MainPage.vue";
@@ -13,17 +13,19 @@ import ChatPage from "@/components/ChatPage.vue";
 import PicturePage from "@/components/PicturePage.vue";
 import AccountPage from "@/components/AccountPage.vue";
 import ChatDetailPage from "@/components/ChatDetailPage.vue";
+import AdminPage from "@/components/AdminPage.vue";
 
 const routes = [
-    { path: '/login', component: LoginPage },
-    { path: '/chat', component: ChatPage },
-    { path: '/chat/:id', component: ChatDetailPage},
-    { path: '/pic', component: PicturePage},
-    { path: '/pic/:id', component: PicturePage},
-    { path: '/user', component: AccountPage},
-    { path: '/user/:id', component: AccountPage},
-    { path: '/register', component: RegisterPage },
-    { path: '/', component: MainPage },
+    {path: '/login', component: LoginPage},
+    {path: '/chat', component: ChatPage},
+    {path: '/chat/:id', component: ChatDetailPage},
+    {path: '/pic', component: PicturePage},
+    {path: '/pic/:id', component: PicturePage},
+    {path: '/user', component: AccountPage},
+    {path: '/user/:id', component: AccountPage},
+    {path: '/register', component: RegisterPage},
+    {path: '/admin', component: AdminPage},
+    {path: '/', component: MainPage},
 ]
 
 const router = createRouter({

@@ -1,19 +1,59 @@
 <template>
-  <header>
+  <mdui-layout>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  </header>
-    <div style="position: relative">
-    <mdui-navigation-rail contained>
-      <mdui-navigation-rail-item v-if="isAuthenticated" icon="insert_photo--outlined" value="Picture" @click="picture">Picture</mdui-navigation-rail-item>
-      <mdui-navigation-rail-item v-if="isAuthenticated" icon="message--outlined" value="Chat" @click="chat">Chat</mdui-navigation-rail-item>
-      <mdui-navigation-rail-item icon="assignment_ind" value="Account" @click="account">Account</mdui-navigation-rail-item>
-    </mdui-navigation-rail>
-    <div style="overflow: auto">
-      <router-view :nowUser="userName" :nowUserId="userId"></router-view>
+    <div style="position: relative" class="main-body">
+      <mdui-navigation-rail contained class="side-bar">
+        <mdui-navigation-rail-item v-if="isAuthenticated" icon="insert_photo--outlined" value="Picture"
+                                   @click="picture">
+          Picture
+        </mdui-navigation-rail-item>
+        <mdui-navigation-rail-item v-if="isAuthenticated" icon="message--outlined" value="Chat" @click="chat">Chat
+        </mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="assignment_ind" value="Account" @click="account">Account
+        </mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="fact_check" value="Admin" @click="admin">Admin</mdui-navigation-rail-item>
+      </mdui-navigation-rail>
+      <div class="page-view">
+        <router-view :nowUser="userName" :nowUserId="userId" class="page-view"></router-view>
+      </div>
     </div>
-  </div>
+  </mdui-layout>
 </template>
+
+<style scoped>
+.main-body {
+  display: flex;
+  //align-items: center;
+  justify-content: left;
+  //margin-left: 10%;
+  padding: 0;
+  position: fixed;
+  height: 100vh; /* Ensure full viewport height */
+  margin: 0; /* Remove default body margin */
+}
+
+.page-view {
+  //display: flow;
+  //align-items: center;
+  //justify-content: left;
+  position: fixed;
+  width: 80%;
+  margin: 0 auto;
+  height: 100vh; /* Ensure full viewport height */
+  //margin: 0; /* Remove default body margin */
+  top:0;
+}
+
+.side-bar {
+  height: 100%;
+  width: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+</style>
 
 <script>
 export default {
@@ -21,7 +61,7 @@ export default {
     return {
       errorMessage: '',
       userId: '',
-      userName : ''
+      userName: ''
     };
   },
   methods: {
@@ -31,16 +71,23 @@ export default {
     changeUserName(newName) {
       this.userName = newName;
     },
+    admin(){
+      clearInterval(this.intervalID);
+      return this.$router.push('/admin');
+    },
     picture() {
+      clearInterval(this.intervalID);
       return this.$router.push('/pic');
     },
     chat() {
+      clearInterval(this.intervalID);
       return this.$router.push('/chat');
     },
     account() {
+      clearInterval(this.intervalID);
       return this.$router.push('/');
     },
-    async getUserId(){
+    async getUserId() {
       try {
         const response = await fetch('http://localhost:8080/api/v1/user/whoami', {
           method: 'GET',
@@ -64,7 +111,7 @@ export default {
         this.errorMessage = error.message;
       }
     },
-    async GetUserName(userId){
+    async GetUserName(userId) {
       try {
         const response = await fetch(`http://localhost:8080/api/v1/user/info/${userId}`, {
           method: 'GET',
