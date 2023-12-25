@@ -39,7 +39,7 @@ export default {
   methods: {
     async recall(messageId) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/msg/v1/recall/${messageId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/msg/v1/recall/${messageId}`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -70,7 +70,7 @@ export default {
     },
     async fetchMessages() {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/msg/v1/get/${this.$route.params.id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/msg/v1/get/${this.$route.params.id}`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -97,7 +97,7 @@ export default {
         if (this.newMessage === '') {
           return;
         }
-        const response = await fetch(`http://localhost:8080/api/v1/msg/v1/send/${this.$route.params.id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/msg/v1/send/${this.$route.params.id}`, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -124,7 +124,7 @@ export default {
     },
     async deleteMessage(messageId) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/msg/v1/delete/${messageId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/msg/v1/delete/${messageId}`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -149,9 +149,11 @@ export default {
     },
     async GetUserName(userId) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/user/info/${userId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/info/${userId}`, {
           method: 'GET',
-
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
         });
 
         if (!response.ok) {

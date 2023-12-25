@@ -4,7 +4,7 @@ import {ref, onMounted} from 'vue';
 const pictures = ref([]);
 
 async function fetchPictures() {
-  const response = await fetch('http://localhost:8080/api/v1/pic/list/all', {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/list/all`, {
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
@@ -19,7 +19,7 @@ async function fetchPictures() {
 }
 
 async function deletePicture(uuid) {
-  const response = await fetch(`http://localhost:8080/api/v1/pic/delete/${uuid}`, {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/delete/${uuid}`, {
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
@@ -28,15 +28,15 @@ async function deletePicture(uuid) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   // Remove the picture from the list
-  pictures.value = pictures.value.filter(picture => picture.uuid !== uuid);
+  pictures.value = pictures.value.filter(picture => picture.UUID !== uuid);
 }
 
 async function previewPicture(uuid) {
-  window.open('http://localhost:8080/img/' + uuid, '_blank');
+  window.open(`${import.meta.env.VITE_BACKEND_URL}/img/` + uuid, '_blank');
 }
 
 async function downloadPicture(uuid) {
-  const response = await fetch(`http://localhost:8080/api/v1/pic/download/${uuid}`, {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/download/${uuid}`, {
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }

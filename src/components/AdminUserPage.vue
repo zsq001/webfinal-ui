@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 
 const users = ref([]);
 async function fetchUsers() {
-  const response = await fetch('http://localhost:8080/api/v1/user/list',{
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/list`,{
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
@@ -18,7 +18,7 @@ async function fetchUsers() {
 }
 
 async function deleteUser(id) {
-  const response = await fetch(`http://localhost:8080/api/v1/user/delete/${id}`,{
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/delete/${id}`,{
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }

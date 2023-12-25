@@ -37,7 +37,7 @@ export default {
   methods: {
     async get_id() {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/user/whoami', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/whoami`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -64,7 +64,7 @@ export default {
         alert("You can't chat with yourself!");
       } else {
         try {
-          const response = await fetch(`http://localhost:8080/api/v1/user/info/${id}`, {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/info/${id}`, {
             method: 'GET',
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -83,7 +83,7 @@ export default {
     },
     async fetchList() {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/msg/v1/list', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/msg/v1/list`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')

@@ -27,7 +27,7 @@ export default {
       formData.append('user', this.username);
       formData.append('pass', this.password);
 
-      const response = await fetch('http://localhost:8080/api/v1/user/register', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`, {
         method: 'POST',
         body: formData
       });

@@ -11,9 +11,9 @@ import 'mdui/mdui.css';
 import 'mdui';
 import ChatPage from "@/components/ChatPage.vue";
 import PicturePage from "@/components/PicturePage.vue";
-import AccountPage from "@/components/AccountPage.vue";
 import ChatDetailPage from "@/components/ChatDetailPage.vue";
 import AdminPage from "@/components/AdminPage.vue";
+import dotenv from 'dotenv'
 
 const routes = [
     {path: '/login', component: LoginPage},
@@ -21,8 +21,6 @@ const routes = [
     {path: '/chat/:id', component: ChatDetailPage},
     {path: '/pic', component: PicturePage},
     {path: '/pic/:id', component: PicturePage},
-    {path: '/user', component: AccountPage},
-    {path: '/user/:id', component: AccountPage},
     {path: '/register', component: RegisterPage},
     {path: '/admin', component: AdminPage},
     {path: '/', component: MainPage},

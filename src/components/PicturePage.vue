@@ -2,7 +2,7 @@
   <div>
     <h2>Your Pictures</h2>
     <!--    <div v-for="picture in pictures" :key="picture.UUID">-->
-    <!--      <img :src="'http://localhost:8080/img/' + picture.UUID" :alt="picture.name">-->
+    <!--      <img :src="'${import.meta.env.VITE_BACKEND_URL}/img/' + picture.UUID" :alt="picture.name">-->
     <!--      <button @click="downloadPicture(picture.id)">Download</button>-->
     <!--      <button @click="deletePicture(picture.id)">Delete</button>-->
     <!--    </div>-->
@@ -41,11 +41,11 @@ export default {
   },
   methods: {
     async previewPictures(uuid) {
-      window.open('http://localhost:8080/img/' + uuid, '_blank');
+      window.open(`${import.meta.env.VITE_BACKEND_URL}/img/` + uuid, '_blank');
     },
     async fetchPictures() {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/pic/list', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/list`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default {
         const formData = new FormData();
         formData.append('document', this.selectedFile);
 
-        const response = await fetch('http://localhost:8080/api/v1/pic/upload', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/upload`, {
           method: 'POST',
           body: formData,
           headers: {
@@ -109,7 +109,7 @@ export default {
     },
     async downloadPicture(uuid) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/pic/download/${uuid}`, {
+        const response = await fetch(`${import.meta.env.VITE_VITE_BACKEND_URL}/api/v1/pic/download/${uuid}`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -154,7 +154,7 @@ export default {
     },
     async deletePicture(uuid) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/pic/delete/${uuid}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/delete/${uuid}`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')

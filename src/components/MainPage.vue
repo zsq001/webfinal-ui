@@ -37,7 +37,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/user/update/${userId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update/${userId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
