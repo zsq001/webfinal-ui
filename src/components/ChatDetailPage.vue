@@ -29,9 +29,14 @@ export default {
       errorMessage: '',
       userName: '',
       myUserName: '',
+      targetUid: '',
     };
   },
   async created() {
+    if (typeof this.$route.params.id !== 'number') {
+      await this.GetUserID(this.$route.params.id);
+      this.$route.params.id = this.targetUid;
+    }
     await this.fetchMessages();
     await this.GetUserName(this.$route.params.id);
     this.intervalID = setInterval(this.fetchMessages, 1000);
@@ -164,6 +169,31 @@ export default {
         await this.fetchMessages();
         if (data && data.data) {
           this.userName = data.data.name;
+
+        } else {
+          this.errorMessage = data.error;
+        }
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
+    },
+    async GetUserID(name) {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/info/${name}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        this.targetUid = data.data.id;
+        if (data && data.data) {
+          this.myUserName = data.data;
 
         } else {
           this.errorMessage = data.error;

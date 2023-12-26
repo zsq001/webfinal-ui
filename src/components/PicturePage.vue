@@ -109,7 +109,7 @@ export default {
     },
     async downloadPicture(uuid) {
       try {
-        const response = await fetch(`${import.meta.env.VITE_VITE_BACKEND_URL}/api/v1/pic/download/${uuid}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/pic/download/${uuid}`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
